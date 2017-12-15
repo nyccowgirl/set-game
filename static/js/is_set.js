@@ -25,9 +25,7 @@ var playerGuess = new Set(card1, card2, card3)
 var checkingInProgress = true
 while (checkingInProgress == true) {
 	for (let i = 0; i < 3; i++) {
-
 }
-
 
 }
 

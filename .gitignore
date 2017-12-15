@@ -2,3 +2,5 @@
 env
 .DS_*
 open_env.txt
+node_modules
+static/js/bundle.js

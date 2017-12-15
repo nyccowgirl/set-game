@@ -1,4 +1,6 @@
 {"dependencies" :
 	{
 		"collections" : "latest"
-		}}
+		, "browserify" : "latest"
+		}
+	}
