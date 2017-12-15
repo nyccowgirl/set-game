@@ -9,24 +9,27 @@ for details about set. */
 // # TODO - Figure out how to get collections.js into requirements.txt
 // Collections.js must be installed
 
-var Set = require("collections/set");
-
-var isSet;
+let Set = require("collections/set");
 
 // Constant attributes for cards
-let SHAPES = new Set('diamond', 'squiggle', 'oval')
-let NUMBERS = new Set('one', 'two', 'three')
-let COLORS = new Set('red', 'purple', 'green')
-let SHADING = new Set('solid', 'striped', 'outlined')
+const SHAPES = new Set('diamond', 'squiggle', 'oval')
+const NUMBERS = new Set('one', 'two', 'three')
+const COLORS = new Set('red', 'purple', 'green')
+const SHADING = new Set('solid', 'striped', 'outlined')
 
-var playerGuess = new Set(card1, card2, card3)
+let playerGuess = [card1, card2, card3]
 
 
-var checkingInProgress = true
+function checkIfSet(listOfCards) {
+  let isSet = true;
+
+}
 while (checkingInProgress == true) {
 	for (let i = 0; i < 3; i++) {
-}
+	}  if card
 
 }
 
+Event listener on click of card. click pushes card into array. 
+once array length is three, check for set, act accordingly
 
