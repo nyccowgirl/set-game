@@ -1,0 +1,46 @@
+
+--------------------------------------------------
+
+REACT SETUP NOTES
+
+--------------------------------------------------
+
+1) prerequisites: up to date node.js (https://nodejs.org/en/)
+
+
+2) create new project in virtual environment
+
+>>> npm install -g create-react-app
+>>> create-react-app my-app
+>>> pip freeze > requirements.txt
+
+Note: for Mac, may need 'sudo' before npm. 'my-app' can be any
+name
+
+
+3) if need to start fresh, delete files in src folder
+
+>>> cd my-app
+>>> rm -f src/*
+
+
+4) in index.js:
+
+#################
+#### server  ####
+#################
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+
+5) to render:
+
+>>> npm start
+
+- and -
+
+open https://localhost:3000
+
+--------------------------------------------------
+
