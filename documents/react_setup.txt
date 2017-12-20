@@ -18,7 +18,7 @@ Note: for Mac, may need 'sudo' before npm. 'my-app' can be any
 name
 
 
-3) if need to start fresh, delete files in src folder
+3) if need to start fresh, delete files in src folder; otherwise, customize prefab files
 
 >>> cd my-app
 >>> rm -f src/*
