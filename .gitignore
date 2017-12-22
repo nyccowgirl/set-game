@@ -1,4 +1,6 @@
 *.pyc
-env
+/env
 .DS_*
 open_env.txt
+*secrets*
+/node_modules

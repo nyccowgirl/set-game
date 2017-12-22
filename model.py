@@ -228,7 +228,6 @@ class Invite(db.Model):
         return (u'<invite_id={} user_id={} accepted={}>'.format(self.invite_id,
                 self.user_id, self.accepted))
 
-
 ##############################################################################
 
 # Helper functions
