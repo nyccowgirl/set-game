@@ -1,4 +1,4 @@
-"""Utility file to seed set database from fake data for demo."""
+#Utility file to seed set database from fake data.
 
 from sqlalchemy import func
 from model import User, Friend, Card, Invite, connect_to_db, db
@@ -6,7 +6,6 @@ from photo_url import PHOTOS_F as womenpics, PHOTOS_M as menpics
 from datetime import datetime
 from server import app
 from faker import Faker
-# import re
 import random
 
 fake = Faker()
