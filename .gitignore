@@ -4,3 +4,4 @@
 open_env.txt
 *secrets*
 /node_modules
+static/js/bundle.js
