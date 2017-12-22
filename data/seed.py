@@ -1,7 +1,7 @@
 """Utility file to seed set database from fake data for demo."""
 
 from sqlalchemy import func
-from model import User, connect_to_db, db
+from model import User, Friend, Card, Invite, connect_to_db, db
 from photo_url import PHOTOS_F as womenpics, PHOTOS_M as menpics
 from datetime import datetime
 from server import app
@@ -12,6 +12,7 @@ import random
 fake = Faker()
 
 ##############################################################################
+
 
 def create_users():
     """
@@ -119,7 +120,7 @@ def load_users():
             valid_email = False
 
         user = User(username=username,
-                    password=password,
+                    password=pw,
                     first_name=fname,
                     last_name=lname,
                     email=email,
@@ -143,6 +144,118 @@ def load_friends():
 
     print 'Friends'
 
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate friend relationships.
+    Friend.query.delete()
+
+    # Read friend file and insert data
+    for line in open('friends.txt', 'rU'):
+        line = line.rstrip()
+
+        user_id, friend_id = line.split('|')
+
+        friend = Friend(user_id=int(user_id), friend_id=int(friend_id))
+
+        # Add each friend relationship to the session
+        db.session.add(friend)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_cards():
+    """Loads cards in a deck into database."""
+
+    print 'Cards'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate cards.
+    Card.query.delete()
+
+    # Read cards file and insert data
+    for line in open('cards.txt', 'rU'):
+        line = line.rstrip()
+
+        num, shade, shape, color = line.split('|')
+
+        card = Card(number=num, shading=shade, shape=shape, color=color)
+
+        # Add each card to the session
+        db.session.add(card)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_invites():
+    """Loads invites from fake data into database."""
+
+    print 'Invites'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate cards.
+    Invite.query.delete()
+
+    # Read invites file and insert data
+    for line in open('invites.txt', 'rU'):
+        line = line.rstrip()
+
+        user_id, email, accepted = line.split('|')
+
+        # Convert string to boolean
+        if accepted == 'True':
+            accepted = True
+        else:
+            accepted = False
+
+        invite = Invite(user_id=int(user_id), friend_email=email, accepted=accepted)
+
+        # Add each invite to the session
+        db.session.add(invite)
+
+    # Commit at end
+    db.session.commit()
+
+
+def set_val_id():
+    """Sets value for the next autoincrement after seeding database"""
+
+    # Get the max autoincremented primary key in the database
+    result = db.session.query(func.max(User.user_id)).one()
+    user_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': user_max_id + 1})
+
+    # Get the max autoincremented primary key in the database
+    result = db.session.query(func.max(Friend.link_id)).one()
+    friend_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('friends_link_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': friend_max_id + 1})
+
+    # Get the max autoincremented primary key in the database
+    result = db.session.query(func.max(Card.user_id)).one()
+    card_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('cards_card_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': card_max_id + 1})
+
+    # Get the max autoincremented primary key in the database
+    result = db.session.query(func.max(Invite.invite_id)).one()
+    invite_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('invites_invite_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': invite_max_id + 1})
+
+    # Commit at end
+    db.session.commit()
+
+
 ##############################################################################
 
 # Helper functions
@@ -153,3 +266,16 @@ if __name__ == "__main__":
 
     # In case tables haven't been created, create them
     db.create_all()
+
+    # Create fake data
+    create_users()
+    create_friends()
+    create_cards()
+    create_invites()
+
+    # Import data for various tables into database
+    load_users()
+    load_friends()
+    load_cards()
+    load_invites()
+    set_val_id()
